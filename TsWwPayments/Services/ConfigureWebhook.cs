@@ -30,6 +30,8 @@ public class ConfigureWebhook : IHostedService
         // Since nobody else knows your bot's token, you can be pretty sure it's us.
         var webhookAddress = @$"{_botConfig.HostAddress}/bot/{_botConfig.BotToken}";
         _logger.LogInformation("Setting webhook: {webhookAddress}", webhookAddress);
+        Console.WriteLine(botClient.BotId);
+        Console.WriteLine(_botConfig.BotToken);
         await botClient.SetWebhookAsync(
             url: webhookAddress,
             allowedUpdates: Array.Empty<UpdateType>(),
