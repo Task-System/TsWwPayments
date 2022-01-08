@@ -25,5 +25,5 @@ jobs:
     - name: Deploy to IIS
       run: |
         iisreset /stop
-        Copy-Item ./TsWwPayments/bin/Debug/net6.0/win-x64/publish/* C:\Users\Administrator\Desktop\Site\Payments -Recurse -Force
+        Copy-Item ./TsWwPayments/bin/Release/net6.0/win-x64/publish/* C:\Users\Administrator\Desktop\Site\Payments -Recurse -Force
         iisreset /start
