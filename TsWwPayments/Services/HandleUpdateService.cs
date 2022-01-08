@@ -43,16 +43,16 @@ public class HandleUpdateService
         {
             case { Text: { } text } when text.StartsWith("/start"):
                 {
-                    await _botClient.SendTextMessageAsync(message.Chat.Id, "Started!");
+                    await _botClient.SendTextMessageAsync(message.Chat.Id, "Started! To Check ... ");
                     return;
                 }
         }
     }
 
     // Process Inline Keyboard callback data
-    private async Task BotOnCallbackQueryReceived(CallbackQuery callbackQuery)
+    private Task BotOnCallbackQueryReceived(CallbackQuery callbackQuery)
     {
-
+        return Task.CompletedTask;
     }
 
     private Task UnknownUpdateHandlerAsync(Update update)
