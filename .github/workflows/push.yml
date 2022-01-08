@@ -11,7 +11,11 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     
-    # dotnet build and publish
+    - name: Set Secrets
+      run: |
+        dotnet user-secrets set "BotConfigs:HostAddress" "${{ secrets.HOST_ADDR }}" --id "ed9fd539-c357-4572-ab55-2a0e59cccac1"
+        dotnet user-secrets set "BotConfigs:BotToken" "${{ secrets.BOT_TOKEN }}" --id "ed9fd539-c357-4572-ab55-2a0e59cccac1"
+
     - name: Build with dotnet
       run: dotnet build --configuration Release .\TsWwPayments
 
