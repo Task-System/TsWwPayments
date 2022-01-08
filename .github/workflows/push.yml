@@ -1,0 +1,26 @@
+name: Deploy to IIS
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build-and-deploy:
+
+    runs-on: self-hosted
+    
+    steps:
+    - uses: actions/checkout@v1
+    
+    # dotnet build and publish
+    - name: Build with dotnet
+      run: dotnet build --configuration Release .\TsWwPayments
+
+    - name: dotnet publish 
+      run: |
+        dotnet publish -c Release -o paymentsapp .\TsWwPayments
+    - name: Deploy to IIS
+      run: |
+        iisreset /stop
+        Copy-Item ./paymentsapp/* C:\Users\Administrator\Desktop\Site\Payments -Recurse -Force
+        iisreset /start
