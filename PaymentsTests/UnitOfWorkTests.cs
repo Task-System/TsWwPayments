@@ -20,11 +20,11 @@ namespace Payments.Tests
             //    PaymentsContext,
             //    Transmission>("transmissions");
 
-            unitOfWork.AddRepository("transmissions", typeof(TransmissionRepository<PaymentsContext>));
+            unitOfWork.AddRepository(typeof(TransmissionRepository<PaymentsContext>));
 
-            var repo = unitOfWork.GetRepository<TransmissionRepository<PaymentsContext>>("transmissions");
+            var repo = unitOfWork.GetRepository<TransmissionRepository<PaymentsContext>>();
 
-            var repo1 = unitOfWork.GetBaseRepository<PaymentsContext, PaymentsAccount>();
+            var repo1 = unitOfWork.GetBaseRepository<PaymentsAccount>();
 
             // var list = await repo.EntitySet.ToListAsync();
 

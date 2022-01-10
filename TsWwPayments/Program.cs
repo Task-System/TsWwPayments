@@ -1,3 +1,4 @@
+using ImRepositoryPattern;
 using Microsoft.EntityFrameworkCore;
 using Telegram.Bot;
 using TsWwPayments;
@@ -15,6 +16,8 @@ var botConfigs = builder.Configuration.GetSection("BotConfigs").Get<BotConfigs>(
 // We are going to use IHostedService to add and later remove Webhook
 builder.Services.AddHostedService<ConfigureWebhook>();
 
+builder.Services.AddHostedService<DatabasePreload>();
+
 // Register named HttpClient to get benefits of IHttpClientFactory
 // and consume it with ITelegramBotClient typed client.
 // More read:
@@ -26,6 +29,8 @@ builder.Services.AddHttpClient("tgwebhook")
 
 // Dummy business-logic service
 builder.Services.AddScoped<HandleUpdateService>();
+
+builder.Services.AddScoped<IUnitOfWork<PaymentsContext>, ScopedUnitOfWork<PaymentsContext>>();
 
 // The Telegram.Bot library heavily depends on Newtonsoft.Json library to deserialize
 // incoming webhook updates and send serialized responses back.
