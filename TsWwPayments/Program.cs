@@ -1,5 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Telegram.Bot;
 using TsWwPayments;
+using TsWwPayments.Databases;
 using TsWwPayments.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,6 +33,9 @@ builder.Services.AddScoped<HandleUpdateService>();
 //   https://docs.microsoft.com/en-us/aspnet/core/web-api/advanced/formatting?view=aspnetcore-5.0#add-newtonsoftjson-based-json-format-support
 builder.Services.AddControllers()
     .AddNewtonsoftJson();
+
+builder.Services.AddDbContext<PaymentsContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("PaymentsConnection")));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

@@ -1,0 +1,3 @@
+[submodule "ImRepositoryPattern"]
+	path = ImRepositoryPattern
+	url = https://github.com/immmdreza/ImRepositoryPattern.git
