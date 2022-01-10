@@ -16,8 +16,6 @@
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <PackageReference Include="Telegram.Bot" Version="17.0.0" />
-    <PackageReference Include="ZarinpalSharp" Version="1.3.0" />
-    <PackageReference Include="ZarinpalSharp.Asp" Version="1.0.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TsWwPaymentsModelApi\TsWwPaymentsModelApi.csproj" />
+    <ProjectReference Include="..\ZarinpalSharp\ZarinSharp\ZarinSharp.csproj" />
   </ItemGroup>
 
 </Project>
