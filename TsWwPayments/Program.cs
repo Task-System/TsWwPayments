@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Telegram.Bot;
 using TsWwPayments;
 using TsWwPayments.Databases;
+using TsWwPayments.Repositories;
 using TsWwPayments.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,13 +25,16 @@ builder.Services.AddHostedService<DatabasePreload>();
 //  https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-requests?view=aspnetcore-5.0#typed-clients
 //  https://docs.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests
 builder.Services.AddHttpClient("tgwebhook")
-        .AddTypedClient<ITelegramBotClient>(httpClient
-            => new TelegramBotClient(botConfigs.BotToken, httpClient));
+    .AddTypedClient<ITelegramBotClient>(httpClient
+        => new TelegramBotClient(botConfigs.BotToken, httpClient));
 
 // Dummy business-logic service
 builder.Services.AddScoped<HandleUpdateService>();
 
-builder.Services.AddScoped<IUnitOfWork<PaymentsContext>, ScopedUnitOfWork<PaymentsContext>>();
+builder.Services.AddScoped<IUnitOfWork<PaymentsContext>>(
+    x=> new ScopedUnitOfWork<PaymentsContext>(
+        x.GetRequiredService<PaymentsContext>(),
+        typeof(TransmissionRepository)));
 
 // The Telegram.Bot library heavily depends on Newtonsoft.Json library to deserialize
 // incoming webhook updates and send serialized responses back.

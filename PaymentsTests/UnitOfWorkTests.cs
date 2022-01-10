@@ -2,8 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 using TsWwPayments.Databases;
+using TsWwPayments.Repositories;
 using TsWwPaymentsModelApi.Models;
-using TsWwPaymentsModelApi.Repositories.CustomRepositories;
 
 namespace Payments.Tests
 {
@@ -20,9 +20,9 @@ namespace Payments.Tests
             //    PaymentsContext,
             //    Transmission>("transmissions");
 
-            unitOfWork.AddRepository(typeof(TransmissionRepository<PaymentsContext>));
+            unitOfWork.AddRepository(typeof(TransmissionRepository));
 
-            var repo = unitOfWork.GetRepository<TransmissionRepository<PaymentsContext>>();
+            var repo = unitOfWork.GetRepository<TransmissionRepository>();
 
             var repo1 = unitOfWork.GetBaseRepository<PaymentsAccount>();
 

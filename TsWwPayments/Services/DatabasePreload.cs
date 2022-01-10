@@ -1,6 +1,6 @@
 ﻿using ImRepositoryPattern;
 using TsWwPayments.Databases;
-using TsWwPaymentsModelApi.Models;
+using TsWwPayments.Repositories;
 
 namespace TsWwPayments.Services
 {
@@ -18,9 +18,9 @@ namespace TsWwPayments.Services
             using var scope = _services.CreateScope();
             var db = scope.ServiceProvider.GetService<IUnitOfWork<PaymentsContext>>();
 
-            var basicRepo = db!.GetBaseRepository<Transmission>();
+            var basicRepo = db!.GetRepository<TransmissionRepository>();
 
-            var transmissions = await basicRepo.FindAsync();
+            var transmissions = await basicRepo.FindAsync(cancellationToken: cancellationToken);
         }
 
         public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
