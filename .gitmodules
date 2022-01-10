@@ -1,3 +1,6 @@
 [submodule "ImRepositoryPattern"]
 	path = ImRepositoryPattern
 	url = https://github.com/immmdreza/ImRepositoryPattern.git
+[submodule "ZarinpalSharp"]
+	path = ZarinpalSharp
+	url = https://github.com/immmdreza/ZarinpalSharp.git
