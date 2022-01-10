@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ImRepositoryPattern;
+using ImRepositoryPattern.Repository;
+using Microsoft.EntityFrameworkCore;
 using TsWwPaymentsModelApi.Models;
 
 namespace TsWwPaymentsModelApi.Repositories.CustomRepositories

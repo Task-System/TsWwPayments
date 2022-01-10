@@ -1,8 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ImRepositoryPattern;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 using TsWwPayments.Databases;
-using TsWwPaymentsModelApi;
 using TsWwPaymentsModelApi.Models;
 using TsWwPaymentsModelApi.Repositories.CustomRepositories;
 
