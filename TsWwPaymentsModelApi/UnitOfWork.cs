@@ -3,7 +3,7 @@ using TsWwPaymentsModelApi.Repositories;
 
 namespace TsWwPaymentsModelApi
 {
-    public class UnitOfWork<T> where T : DbContext, new()
+    public class UnitOfWork<T>: IDisposable where T : DbContext, new()
     {
         public T Context { get; }
 
