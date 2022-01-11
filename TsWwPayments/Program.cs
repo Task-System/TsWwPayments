@@ -1,10 +1,14 @@
 using ImRepositoryPattern;
 using Microsoft.EntityFrameworkCore;
+using SimpleUpdateHandler.CustomFilters;
+using SimpleUpdateHandler.DependencyInjection;
 using Telegram.Bot;
+using Telegram.Bot.Types;
 using TsWwPayments;
 using TsWwPayments.Databases;
 using TsWwPayments.Repositories;
 using TsWwPayments.Services;
+using TsWwPayments.UpdateHandlers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +34,11 @@ builder.Services.AddHttpClient("tgwebhook")
 
 // Dummy business-logic service
 builder.Services.AddScoped<HandleUpdateService>();
+
+builder.Services.AddUpdateProcessor(
+    handlerContainers: new SimpleHandlerContainer<Message>(
+        typeof(HandleStartCommand),
+        new MessageTextFilter(x => x.StartsWith("/start"))));
 
 builder.Services.AddScoped<IUnitOfWork<PaymentsContext>>(
     x=> new ScopedUnitOfWork<PaymentsContext>(

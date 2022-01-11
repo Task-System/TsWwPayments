@@ -1,4 +1,5 @@
-﻿using Telegram.Bot;
+﻿using SimpleUpdateHandler.DependencyInjection;
+using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -10,32 +11,37 @@ public class HandleUpdateService
 {
     private readonly ITelegramBotClient _botClient;
     private readonly ILogger<HandleUpdateService> _logger;
+    private readonly SimpleDiUpdateProcessor _updateProcessor;
 
     public HandleUpdateService(
         ITelegramBotClient botClient,
-        ILogger<HandleUpdateService> logger)
+        ILogger<HandleUpdateService> logger,
+        SimpleDiUpdateProcessor updateProcessor)
     {
         _botClient = botClient;
         _logger = logger;
+        _updateProcessor = updateProcessor;
     }
 
     public async Task HandleTheShit(Update update)
     {
-        var handler = update.Type switch
-        {
-            UpdateType.Message => BotOnMessageReceived(update.Message!),
-            UpdateType.CallbackQuery => BotOnCallbackQueryReceived(update.CallbackQuery!),
-            _ => UnknownUpdateHandlerAsync(update)
-        };
+        await _updateProcessor.ProcessSimpleHandlerAsync(update);
 
-        try
-        {
-            await handler;
-        }
-        catch (Exception exception)
-        {
-            await HandleErrorAsync(exception);
-        }
+        //var handler = update.Type switch
+        //{
+        //    UpdateType.Message => BotOnMessageReceived(update.Message!),
+        //    UpdateType.CallbackQuery => BotOnCallbackQueryReceived(update.CallbackQuery!),
+        //    _ => UnknownUpdateHandlerAsync(update)
+        //};
+
+        //try
+        //{
+        //    await handler;
+        //}
+        //catch (Exception exception)
+        //{
+        //    await HandleErrorAsync(exception);
+        //}
     }
 
     private async Task BotOnMessageReceived(Message message)

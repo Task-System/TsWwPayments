@@ -10,7 +10,14 @@ public class WebhookController : ControllerBase
     public async Task<IActionResult> Post([FromServices] HandleUpdateService handleUpdateService,
                                           [FromBody] Update update)
     {
-        await handleUpdateService.HandleTheShit(update);
+        try
+        {
+            await handleUpdateService.HandleTheShit(update);
+        }
+        catch (Exception ex)
+        {
+
+        }
         return Ok();
     }
 }
