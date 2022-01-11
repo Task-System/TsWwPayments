@@ -26,22 +26,6 @@ public class HandleUpdateService
     public async Task HandleTheShit(Update update)
     {
         await _updateProcessor.ProcessSimpleHandlerAsync(update);
-
-        //var handler = update.Type switch
-        //{
-        //    UpdateType.Message => BotOnMessageReceived(update.Message!),
-        //    UpdateType.CallbackQuery => BotOnCallbackQueryReceived(update.CallbackQuery!),
-        //    _ => UnknownUpdateHandlerAsync(update)
-        //};
-
-        //try
-        //{
-        //    await handler;
-        //}
-        //catch (Exception exception)
-        //{
-        //    await HandleErrorAsync(exception);
-        //}
     }
 
     private async Task BotOnMessageReceived(Message message)

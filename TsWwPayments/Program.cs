@@ -36,8 +36,7 @@ builder.Services.AddHttpClient("tgwebhook")
 builder.Services.AddScoped<HandleUpdateService>();
 
 builder.Services.AddUpdateProcessor(
-    handlerContainers: new SimpleHandlerContainer<Message>(
-        typeof(HandleStartCommand),
+    handlerContainers: new SimpleHandlerContainer<Message, HandleStartCommand>(
         new MessageTextFilter(x => x.StartsWith("/start"))));
 
 builder.Services.AddScoped<IUnitOfWork<PaymentsContext>>(

@@ -1,23 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SimpleUpdateHandler.DependencyInjection;
 using Telegram.Bot.Types;
-using TsWwPayments.Services;
 
 namespace TsWwPayments.Controllers;
 
 public class WebhookController : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> Post([FromServices] HandleUpdateService handleUpdateService,
-                                          [FromBody] Update update)
+    public async Task<IActionResult> Post(
+        [FromServices]SimpleDiUpdateProcessor updateProcessor,
+        [FromBody]Update update)
     {
-        try
-        {
-            await handleUpdateService.HandleTheShit(update);
-        }
-        catch (Exception ex)
-        {
-
-        }
+        await updateProcessor.ProcessSimpleHandlerAsync(update);
         return Ok();
     }
 }
