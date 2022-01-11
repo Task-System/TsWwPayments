@@ -4,3 +4,6 @@
 [submodule "ZarinpalSharp"]
 	path = ZarinpalSharp
 	url = https://github.com/immmdreza/ZarinpalSharp.git
+[submodule "SimpleUpdateHandler"]
+	path = SimpleUpdateHandler
+	url = https://github.com/immmdreza/SimpleUpdateHandler.git
