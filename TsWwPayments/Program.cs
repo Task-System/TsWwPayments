@@ -20,8 +20,7 @@ var botConfigs = builder.Configuration.GetSection("BotConfigs").Get<BotConfigs>(
 // Some of them could be found in this article https://andrewlock.net/running-async-tasks-on-app-startup-in-asp-net-core-part-1/
 // We are going to use IHostedService to add and later remove Webhook
 builder.Services.AddHostedService<ConfigureWebhook>();
-
-builder.Services.AddHostedService<DatabasePreload>();
+// builder.Services.AddHostedService<DatabasePreload>();
 
 // Register named HttpClient to get benefits of IHttpClientFactory
 // and consume it with ITelegramBotClient typed client.
@@ -32,13 +31,15 @@ builder.Services.AddHttpClient("tgwebhook")
     .AddTypedClient<ITelegramBotClient>(httpClient
         => new TelegramBotClient(botConfigs.BotToken, httpClient));
 
-// Dummy business-logic service
-builder.Services.AddScoped<HandleUpdateService>();
+// Telegram updates helper stuff
+builder.Services.AddSingleton(x =>
+    x.AddUpdateProcessor(builder.Services)
+        .RegisterMessage<HandleStartCommand>(FilterCutify.OnCommand("start"))
+        .RegisterCallbackQuery<PaymentCasesCall1>(
+            FilterCutify.DataMatches("^pay_cases_"))
+ );
 
-builder.Services.AddUpdateProcessor(
-    handlerContainers: new SimpleHandlerContainer<Message, HandleStartCommand>(
-        new MessageTextFilter(x => x.StartsWith("/start"))));
-
+// Database helper stuff
 builder.Services.AddScoped<IUnitOfWork<PaymentsContext>>(
     x=> new ScopedUnitOfWork<PaymentsContext>(
         x.GetRequiredService<PaymentsContext>(),

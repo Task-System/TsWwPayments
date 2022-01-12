@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ImRepositoryPattern\ImRepositoryPattern.csproj" />
+    <ProjectReference Include="..\SimpleUpdateHandler\SimpleUpdateHandler\SimpleUpdateHandler.csproj" />
     <ProjectReference Include="..\TsWwPaymentsModelApi\TsWwPaymentsModelApi.csproj" />
     <ProjectReference Include="..\TsWwPayments\TsWwPayments.csproj" />
   </ItemGroup>
