@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using SimpleUpdateHandler.CustomFilters;
 using SimpleUpdateHandler.DependencyInjection;
 using Telegram.Bot;
-using Telegram.Bot.Types;
 using TsWwPayments;
 using TsWwPayments.Databases;
 using TsWwPayments.Repositories;
@@ -32,12 +31,10 @@ builder.Services.AddHttpClient("tgwebhook")
         => new TelegramBotClient(botConfigs.BotToken, httpClient));
 
 // Telegram updates helper stuff
-builder.Services.AddSingleton(x =>
-    x.AddUpdateProcessor(builder.Services)
-        .RegisterMessage<HandleStartCommand>(FilterCutify.OnCommand("start"))
-        .RegisterCallbackQuery<PaymentCasesCall1>(
-            FilterCutify.DataMatches("^pay_cases_"))
- );
+builder.Services.AddUpdateProcessor(configure => configure
+    .RegisterMessage<HandleStartCommand>(FilterCutify.OnCommand("start"))
+    .RegisterMessage<HandlePayCommand>(FilterCutify.OnCommand("pay"))
+    .RegisterCallbackQuery<PaymentCasesCall>(FilterCutify.DataMatches("^pay_cases")));
 
 // Database helper stuff
 builder.Services.AddScoped<IUnitOfWork<PaymentsContext>>(

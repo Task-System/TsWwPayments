@@ -8,7 +8,7 @@ namespace TsWwPayments.UpdateHandlers
     {
         protected override async Task HandleUpdate(SimpleContext<Message> ctx)
         {
-            await ctx.QuickResponse("Hello");
+            await ctx.Response("Hello");
         }
     }
 }

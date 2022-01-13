@@ -4,11 +4,11 @@ using Telegram.Bot.Types;
 
 namespace TsWwPayments.UpdateHandlers
 {
-    public class PaymentCasesCall1 : SimpleDiHandler<CallbackQuery>
+    public class PaymentCasesCall : SimpleDiHandler<CallbackQuery>
     {
-        protected override Task HandleUpdate(SimpleContext<CallbackQuery> ctx)
+        protected override async Task HandleUpdate(SimpleContext<CallbackQuery> ctx)
         {
-            throw new NotImplementedException();
+            await ctx.Answer("Tested!", true);
         }
     }
 }
