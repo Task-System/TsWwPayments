@@ -8,7 +8,7 @@ namespace TsWwPayments.UpdateHandlers
     {
         protected override async Task HandleUpdate(SimpleContext<Message> ctx)
         {
-            await ctx.Response("Hello");
+            await ctx.If(x => x.IsPrivate(), x => x.Response("Started!"));
         }
     }
 }
