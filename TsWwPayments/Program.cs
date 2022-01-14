@@ -33,8 +33,9 @@ builder.Services.AddHttpClient("tgwebhook")
 // Telegram updates helper stuff
 builder.Services.AddUpdateProcessor(configure => configure
     .RegisterMessage<HandleStartCommand>(FilterCutify.OnCommand("start"))
-    .RegisterMessage<HandlePayCommand>(FilterCutify.OnCommand("pay"))
-    .RegisterCallbackQuery<PaymentCasesCall>(FilterCutify.DataMatches("^pay_cases")));
+    .RegisterMessage<HandlePayCommand>(FilterCutify.OnCommand("pay") & FilterCutify.PM())
+    .RegisterMessage<HandlerInHandler>(FilterCutify.OnCommand("test") & FilterCutify.PM())
+    .RegisterCallbackQuery<PaymentCasesCall>(FilterCutify.DataMatches("^pay_")));
 
 // Database helper stuff
 builder.Services.AddScoped<IUnitOfWork<PaymentsContext>>(

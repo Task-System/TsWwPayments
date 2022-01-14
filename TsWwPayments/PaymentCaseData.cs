@@ -119,18 +119,6 @@ namespace TsWwPayments
                     priceRange: (2000, 500000)),
 
                 new PaymentCase(
-                    "adplan", "رزرو کردن تبلیغ",
-                    "در این بخش می توانید در جهت رزرو کردن تبلیغات در ربات، پرداختی را داشته باشید.",
-                    items: new HashSet<PaymentItem>
-                    {
-                        new PaymentItem("adplan_1", "تبلیغ یک روزه", 2000),
-                        new PaymentItem("adplan_2", "تبلیغ سه روزه", 5000, "با 12 ساعت تخفیف."),
-                        new PaymentItem("adplan_3", "تبلیغ یک هفته ای", 12000, "با یک روز تخفیف"),
-                        new PaymentItem("adplan_4", "تبلیغ دو هفته ای", 26000, "با دو روز تخفیف"),
-                        new PaymentItem("adplan_5", "تبلیغ یک ماهه", 50000, "با چهار روز تخفیف"),
-                    }),
-
-                new PaymentCase(
                     "taskyCoinBundle", "خرید TaskyCoin 🀄!",
                     "در این بخش می توانید TaskyCoin🀄 بخرید که برای خرید ایتم های درون @TsWwPlus_Bot مورد استفاده قرار می گیرد.",
                     items: new HashSet<PaymentItem>

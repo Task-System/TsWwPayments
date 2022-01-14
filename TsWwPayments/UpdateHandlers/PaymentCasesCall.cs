@@ -8,9 +8,22 @@ namespace TsWwPayments.UpdateHandlers
     {
         protected override async Task HandleUpdate(SimpleContext<CallbackQuery> ctx)
         {
-            await ctx.If("pay_cases_part1", x => x.Answer("On part 1"))
-                .ElseIf("pay_case_part2", x => x.Answer("On part 2"))
-                .Else(x => x.Answer("On part Unknown"));
+            await ctx.If("^pay_showItems_", async x =>
+            {
+                var caseName    = x.Update.Data![14..];
+                var paymentCase = PaymentCaseData.GetPaymentCase(caseName);
+
+                await x.Edit(text: paymentCase!.Description!,
+                    inlineKeyboardMarkup: paymentCase!.GetItems());
+                await x.Answer(caseName, true);
+            })
+
+            .ElseIf("^pay_askPrice_", async x=>
+            {
+                await x.Answer();
+            })
+
+            .Else(async x => await x.Answer("Undefined!"));
         }
     }
 }

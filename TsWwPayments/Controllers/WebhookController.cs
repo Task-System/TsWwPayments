@@ -7,11 +7,11 @@ namespace TsWwPayments.Controllers;
 public class WebhookController : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> Post(
-        [FromServices]SimpleDiUpdateProcessor updateProcessor,
-        [FromBody]Update update)
+    public IActionResult Post(
+        [FromServices] SimpleDiUpdateProcessor updateProcessor,
+        [FromBody] Update update)
     {
-        await updateProcessor.ProcessSimpleHandlerAsync(update);
+        updateProcessor.Handle(update);
         return Ok();
     }
 }
