@@ -18,19 +18,13 @@ namespace TsWwPayments.UpdateHandlers
         {
             await ctx.Response("Say hello ...");
 
-            var m = await _processor.RegisterCarryHandler(
-                $"{ctx.Update.From!.Id}HnH",
-                FilterCutify.PM()
-                    .And(FilterCutify.MsgOfUsers(ctx.Update.From.Id))
-                        .And(FilterCutify.TextMatchs("^hello")));
-
-            if (m == null)
-            {
-                await ctx.Response("Timed out");
-                return;
-            }
-
-            await m.Response("Hello there!", true);
+            await _processor.CarryUserResponse(ctx.Update.From!.Id, privateOnly: true)
+                .IfNotNull(async x =>
+                {
+                    await x.If("^hello ", async y => await y.Response("Hello There!"))
+                        .Else(x=> x.Response("Undefined response."));
+                })
+                .Else(x=> x.Response("You're timed out."));
         }
     }
 }
