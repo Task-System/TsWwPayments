@@ -1,5 +1,4 @@
 ﻿using SimpleUpdateHandler;
-using SimpleUpdateHandler.CustomFilters;
 using SimpleUpdateHandler.DependencyInjection;
 using Telegram.Bot.Types;
 
@@ -22,9 +21,9 @@ namespace TsWwPayments.UpdateHandlers
                 .IfNotNull(async x =>
                 {
                     await x.If("^hello ", async y => await y.Response("Hello There!"))
-                        .Else(x=> x.Response("Undefined response."));
+                        .Else(async x => await x.Response("Undefined response."));
                 })
-                .Else(x=> x.Response("You're timed out."));
+                .Else(async x => await x.Response("You're timed out."));
         }
     }
 }
