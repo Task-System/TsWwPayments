@@ -8,6 +8,7 @@ using TsWwPayments.Databases;
 using TsWwPayments.Repositories;
 using TsWwPayments.Services;
 using TsWwPayments.UpdateHandlers;
+using ZarinSharp.Asp;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,10 +39,11 @@ builder.Services.AddUpdateProcessor(configure => configure
     .RegisterCallbackQuery<PaymentCasesCall>(FilterCutify.DataMatches("^pay_")));
 
 // Database helper stuff
-builder.Services.AddScoped<IUnitOfWork<PaymentsContext>>(
-    x=> new ScopedUnitOfWork<PaymentsContext>(
-        x.GetRequiredService<PaymentsContext>(),
-        typeof(TransmissionRepository)));
+builder.Services.AddScoped<TransmissionRepository>();
+builder.Services.AddScoped<PaymentsAccountRepository>();
+
+// Add zarinpal
+builder.Services.AddZarinClient(builder.Configuration.GetZarinpalConfiguration());
 
 // The Telegram.Bot library heavily depends on Newtonsoft.Json library to deserialize
 // incoming webhook updates and send serialized responses back.

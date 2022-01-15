@@ -53,6 +53,11 @@ namespace TsWwPayments
         public static PaymentItem? GetPaymentItem(this PaymentCase paymentCase, string id)
             => paymentCase.Items?.FirstOrDefault(x => x.Id == id);
 
+        public static PaymentItem? GetPaymentItem(string id)
+            => PaymentCases
+                .Where(x=> x.Items is not null)
+                .SelectMany(x=> x.Items!).FirstOrDefault(x => x.Id == id);
+
         public static InlineKeyboardMarkup Init()
         {
             return new InlineKeyboardMarkup(PaymentCases.Select(x =>
@@ -93,7 +98,7 @@ namespace TsWwPayments
                 if (item == null)
                     throw new Exception($"No item for {id}");
 
-                return (paymentCase, new InlineKeyboardMarkup(
+                return (item, new InlineKeyboardMarkup(
                     InlineKeyboardButton.WithCallbackData(
                         item.KeyButtonText(), item.KeyButtonData())));
             }
@@ -130,11 +135,11 @@ namespace TsWwPayments
                         // 75  TC = 75k  IRT + fee (1500 IRT) = 76.5K  IRT
                         // 100 TC = 100K IRT + fee (1500 IRT) = 101.5K IRT
 
-                        new PaymentItem("taskyCoinBundle_1", "10 🀄", 11500, "خرید 10 TaskyCoin🀄"),
-                        new PaymentItem("taskyCoinBundle_2", "20 🀄", 21500, "خرید 20 TaskyCoin🀄"),
-                        new PaymentItem("taskyCoinBundle_3", "50 🀄", 51500, "خرید 50 TaskyCoin🀄"),
-                        new PaymentItem("taskyCoinBundle_4", "75 🀄", 76500, "خرید 75 TaskyCoin🀄"),
-                        new PaymentItem("taskyCoinBundle_5", "100 🀄", 101500, "خرید 100 TaskyCoin🀄"),
+                        new PaymentItem("taskyCoinBundle_1", "10 🀄", 11500, "خرید 10 TaskyCoin🀄", Currency.IRT),
+                        new PaymentItem("taskyCoinBundle_2", "20 🀄", 21500, "خرید 20 TaskyCoin🀄", Currency.IRT),
+                        new PaymentItem("taskyCoinBundle_3", "50 🀄", 51500, "خرید 50 TaskyCoin🀄", Currency.IRT),
+                        new PaymentItem("taskyCoinBundle_4", "75 🀄", 76500, "خرید 75 TaskyCoin🀄", Currency.IRT),
+                        new PaymentItem("taskyCoinBundle_5", "100 🀄", 101500, "خرید 100 TaskyCoin🀄", Currency.IRT),
                     })
             };
     }

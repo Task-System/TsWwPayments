@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TsWwPayments", "TsWwPayment
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TsWwPaymentsModelApi", "TsWwPaymentsModelApi\TsWwPaymentsModelApi.csproj", "{6E54A6E2-4928-489D-BC3C-74F886C44037}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentsTests", "PaymentsTests\PaymentsTests.csproj", "{9C3A3377-0546-4519-B9BA-1F30A0F85639}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImRepositoryPattern", "ImRepositoryPattern\ImRepositoryPattern.csproj", "{044C5680-AE5D-4973-BF99-DFE4914F58CD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZarinSharp", "ZarinpalSharp\ZarinSharp\ZarinSharp.csproj", "{D91747B3-31D8-486B-AB81-8E0F268EBE6B}"
@@ -31,10 +29,6 @@ Global
 		{6E54A6E2-4928-489D-BC3C-74F886C44037}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E54A6E2-4928-489D-BC3C-74F886C44037}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E54A6E2-4928-489D-BC3C-74F886C44037}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9C3A3377-0546-4519-B9BA-1F30A0F85639}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9C3A3377-0546-4519-B9BA-1F30A0F85639}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9C3A3377-0546-4519-B9BA-1F30A0F85639}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9C3A3377-0546-4519-B9BA-1F30A0F85639}.Release|Any CPU.Build.0 = Release|Any CPU
 		{044C5680-AE5D-4973-BF99-DFE4914F58CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{044C5680-AE5D-4973-BF99-DFE4914F58CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{044C5680-AE5D-4973-BF99-DFE4914F58CD}.Release|Any CPU.ActiveCfg = Release|Any CPU

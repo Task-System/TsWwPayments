@@ -1,13 +1,48 @@
-﻿using ImRepositoryPattern;
-using TsWwPayments.Databases;
+﻿using TsWwPayments.Databases;
 using TsWwPaymentsModelApi.Models;
+using TsWwPaymentsModelApi.Models.Enums;
+using ZarinSharp.Types.Enums;
 
 namespace TsWwPayments.Repositories
 {
     public class TransmissionRepository : PaymentsRepository<Transmission>
     {
-        public TransmissionRepository(PaymentsContext context, IUnitOfWork<PaymentsContext> unitOfWork) : base(context, unitOfWork)
+        public TransmissionRepository(PaymentsContext context) : base(context)
         {
+        }
+
+        public async Task<Transmission> InitTransmission(
+            int accountId, string authority, string actionId, long amount, Currency currency)
+        {
+            var transmission = new Transmission
+            {
+                PaymentsAccountId = accountId,
+                Authority = authority,
+                CreatedAt = DateTime.UtcNow,
+                ActionId = actionId,
+                Status = TransmissionStatus.Pending,
+                Currency = currency,
+                TransferredAmount = amount
+            };
+
+            Insert(transmission);
+            await SaveAsync();
+            return transmission;
+        }
+
+        public async Task<Transmission?> GetTransmission(string authority)
+        {
+            return await FindOneAsync(x=> x.Authority == authority);
+        }
+
+        public async Task TransmissionDone(int transmissionId, TransmissionStatus status)
+        {
+            var transmission = await GetByIDAsync(transmissionId);
+
+            transmission!.Status = status;
+            transmission.DoneAt = DateTime.UtcNow;
+
+            await SaveAsync();
         }
     }
 }

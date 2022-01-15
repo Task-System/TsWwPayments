@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using TsWwPaymentsModelApi.Models.Enums;
+using ZarinSharp.Types.Enums;
 
 namespace TsWwPaymentsModelApi.Models
 {
@@ -8,28 +9,12 @@ namespace TsWwPaymentsModelApi.Models
     /// </summary>
     public class Transmission
     {
-        public Transmission(
-            int transmissionId,
-            DateTime createdAt,
-            TransmissionStatus status,
-            string actionId,
-            long transferredAmount,
-            int paymentsAccountId,
-            DateTime? doneAt = default)
-        {
-            TransmissionId = transmissionId;
-            CreatedAt = createdAt;
-            DoneAt = doneAt;
-            Status = status;
-            ActionId = actionId;
-            TransferredAmount = transferredAmount;
-            PaymentsAccountId = paymentsAccountId;
-        }
-
         /// <summary>
         /// Unique identifier of this transmission
         /// </summary>
         public int TransmissionId { get; set; }
+
+        public string Authority { get; set; }
 
         /// <summary>
         /// When this <see cref="Transmission"/> created.
@@ -53,6 +38,8 @@ namespace TsWwPaymentsModelApi.Models
 
         public long TransferredAmount { get; set; }
 
+        public Currency Currency { get; set; }
+
         /// <summary>
         /// Executer account id.
         /// </summary>
@@ -63,6 +50,13 @@ namespace TsWwPaymentsModelApi.Models
         /// Accounts details for Executer.
         /// </summary>
         public PaymentsAccount? PaymentsAccount { get; set; }
+
+        public long EnsureIRT()
+        {
+            if (Currency == Currency.IRR)
+                return TransferredAmount / 10;
+            return TransferredAmount;
+        }
 
     }
 }

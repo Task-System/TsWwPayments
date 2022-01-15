@@ -5,16 +5,6 @@
     /// </summary>
     public class PaymentsAccount
     {
-        public PaymentsAccount(
-            int paymentsAccountId,
-            long telegramId,
-            string? name)
-        {
-            PaymentsAccountId = paymentsAccountId;
-            TelegramId = telegramId;
-            Name = name;
-        }
-
         public int PaymentsAccountId { get; set; }
 
         public long TelegramId { get; set; }
