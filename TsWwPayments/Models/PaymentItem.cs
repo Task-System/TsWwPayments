@@ -1,4 +1,6 @@
-﻿using ZarinSharp.Types.Enums;
+﻿using TsWwPayments.Services.OnStatusActions;
+using TsWwPaymentsModelApi.Models.Enums;
+using ZarinSharp.Types.Enums;
 
 namespace TsWwPayments.Models
 {
@@ -17,23 +19,29 @@ namespace TsWwPayments.Models
             string name,
             long amount,
             string? description = default,
-            Currency? currency = default)
+            Currency? currency = default,
+            Type? typeOfStatusAction = default)
         {
             Id = id;
             Name = name;
             Description = description;
             Amount = amount;
             Currency = currency?? Currency.IRR;
+            if (typeOfStatusAction != null)
+                OnStatusAction = (IOnStatusAction<TransmissionStatus, TransmissionFull>?)Activator.CreateInstance(
+                    typeOfStatusAction, new object[] { this });
         }
 
         public string Id { get; }
 
         public string Name { get; }
 
-        public string? Description { get; set; }
+        public string? Description { get; }
 
-        public long Amount { get; set; }
+        public long Amount { get; }
 
-        public Currency Currency { get; set; }
+        public Currency Currency { get; }
+
+        public IOnStatusAction<TransmissionStatus, TransmissionFull>? OnStatusAction { get; }
     }
 }

@@ -19,7 +19,7 @@ namespace TsWwPayments.UpdateHandlers
             TransmissionRepository transmissions)
         {
             _zarinClient = zarinClient;
-            this.accounts = paymentsAccounts;
+            accounts = paymentsAccounts;
             this.transmissions = transmissions;
         }
 
@@ -75,7 +75,7 @@ namespace TsWwPayments.UpdateHandlers
 
                 try
                 {
-
+                    // Create an account if none exists for this user.
                     var acc = await accounts.FindOneAsync(x=> x.TelegramId == context.SenderId());
                     if (acc == null)
                     {
@@ -83,6 +83,10 @@ namespace TsWwPayments.UpdateHandlers
 
                         await context.Send($"#Notify\nCreated payment account.\nID: {acc.PaymentsAccountId}");
                     }
+
+                    // TODO: Check for pendind transmissions
+                    // Old pendings should mark as timedOut and if there is a fresh transmission
+                    // Block user to do any more untill the transmission is dead.
 
                     var payReq = await _zarinClient.PaymentRequestAsync(
                         item.Amount,

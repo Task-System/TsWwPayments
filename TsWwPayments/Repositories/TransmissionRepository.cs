@@ -35,11 +35,8 @@ namespace TsWwPayments.Repositories
             return await FindOneAsync(x=> x.Authority == authority);
         }
 
-        public async Task TransmissionDone(int transmissionId, TransmissionStatus status)
+        public async Task TransmissionDone(Transmission transmission)
         {
-            var transmission = await GetByIDAsync(transmissionId);
-
-            transmission!.Status = status;
             transmission.DoneAt = DateTime.UtcNow;
 
             await SaveAsync();

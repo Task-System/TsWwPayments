@@ -135,11 +135,11 @@ namespace TsWwPayments
                         // 75  TC = 75k  IRT + fee (1500 IRT) = 76.5K  IRT
                         // 100 TC = 100K IRT + fee (1500 IRT) = 101.5K IRT
 
-                        new PaymentItem("taskyCoinBundle_1", "10 🀄", 11500, "خرید 10 TaskyCoin🀄", Currency.IRT),
-                        new PaymentItem("taskyCoinBundle_2", "20 🀄", 21500, "خرید 20 TaskyCoin🀄", Currency.IRT),
-                        new PaymentItem("taskyCoinBundle_3", "50 🀄", 51500, "خرید 50 TaskyCoin🀄", Currency.IRT),
-                        new PaymentItem("taskyCoinBundle_4", "75 🀄", 76500, "خرید 75 TaskyCoin🀄", Currency.IRT),
-                        new PaymentItem("taskyCoinBundle_5", "100 🀄", 101500, "خرید 100 TaskyCoin🀄", Currency.IRT),
+                        new PaymentItem("taskyCoinBundle_1", "10 🀄", 11500, "خرید 10 TaskyCoin🀄",    Currency.IRT, typeof(TaskyCoinStatusAction)),
+                        new PaymentItem("taskyCoinBundle_2", "20 🀄", 21500, "خرید 20 TaskyCoin🀄",    Currency.IRT, typeof(TaskyCoinStatusAction)),
+                        new PaymentItem("taskyCoinBundle_3", "50 🀄", 51500, "خرید 50 TaskyCoin🀄",    Currency.IRT, typeof(TaskyCoinStatusAction)),
+                        new PaymentItem("taskyCoinBundle_4", "75 🀄", 76500, "خرید 75 TaskyCoin🀄",    Currency.IRT, typeof(TaskyCoinStatusAction)),
+                        new PaymentItem("taskyCoinBundle_5", "100 🀄", 101500, "خرید 100 TaskyCoin🀄", Currency.IRT, typeof(TaskyCoinStatusAction)),
                     })
             };
     }

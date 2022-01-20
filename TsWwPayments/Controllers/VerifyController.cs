@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Telegram.Bot;
+using TsWwPayments.Models;
 using TsWwPayments.Repositories;
 using TsWwPaymentsModelApi.Models.Enums;
 using ZarinSharp;
@@ -61,13 +62,19 @@ namespace TsWwPayments.Controllers
                     });
                 }
 
-                await transmissions.TransmissionDone(
-                    transmission.TransmissionId,
-                    TransmissionStatus.Succeeded);
+                transmission.Status = TransmissionStatus.Succeeded;
+                await transmissions.TransmissionDone(transmission);
+
                 logger.LogInformation("Transmission done!. authority: {authority} refId: {refId}", authority, verify.RefId);
 
                 _ = await botClient.SendTextMessageAsync(acc.TelegramId,
                     $"Transmission Done!\nReference Id: {verify.RefId}\nCard: {verify.CardPan}");
+
+                var descriptor = PaymentCaseData.GetInfo(transmission.ActionId);
+                if (descriptor != null)
+                if (descriptor.Value.descriptor.OnStatusAction != null)
+                    await descriptor.Value.descriptor.OnStatusAction.StatusChanged(
+                        TransmissionStatus.Succeeded, new TransmissionFull(transmission, acc));
 
                 return Json(new
                 {
@@ -78,11 +85,19 @@ namespace TsWwPayments.Controllers
             }
             catch (ZarinpalException e)
             {
-                await transmissions.TransmissionDone(
-                    transmission.TransmissionId,
-                    TransmissionStatus.Timedout);
+                transmission.Status = TransmissionStatus.Cancelled;
+                await transmissions.TransmissionDone(transmission);
 
                 logger.LogInformation("Transmission failed!. authority: {authority} code: {code}", authority, e.Code);
+
+                var acc = await accounts.GetByIDAsync(transmission.PaymentsAccountId);
+                var descriptor = PaymentCaseData.GetInfo(transmission.ActionId);
+
+                if (acc != null)
+                if (descriptor != null)
+                if (descriptor.Value.descriptor.OnStatusAction != null)
+                    await descriptor.Value.descriptor.OnStatusAction.StatusChanged(
+                        TransmissionStatus.Succeeded, new TransmissionFull(transmission, acc));
 
                 return Json(new {e.Code, e.Description});
             }

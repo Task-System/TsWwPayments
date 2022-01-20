@@ -1,4 +1,6 @@
-﻿using ZarinSharp.Types.Enums;
+﻿using TsWwPayments.Services.OnStatusActions;
+using TsWwPaymentsModelApi.Models.Enums;
+using ZarinSharp.Types.Enums;
 
 namespace TsWwPayments.Models
 {
@@ -30,7 +32,8 @@ namespace TsWwPayments.Models
                             long? price = default,
                             Currency currency = Currency.IRT,
                             IEnumerable<PaymentItem>? items = default,
-                            (long Minimum, long Maximum)? priceRange = default)
+                            (long Minimum, long Maximum)? priceRange = default,
+                            IOnStatusAction<TransmissionStatus, TransmissionFull>? onStatusAction = default)
         {
             if (price != null)
                 CaseType = PaymentCaseType.SealedCase;
@@ -48,6 +51,7 @@ namespace TsWwPayments.Models
             Items = items;
             Price = price;
             PriceRange = priceRange;
+            OnStatusAction = onStatusAction;
             Currency = currency;
         }
 
@@ -80,6 +84,11 @@ namespace TsWwPayments.Models
         /// <summary>
         /// Ignored if <see cref="CaseType"/> is not <see cref="PaymentCaseType.FreePriceCase"/>
         /// </summary>
-        public (long Minimum, long Maximum)? PriceRange { get; } 
+        public (long Minimum, long Maximum)? PriceRange { get; }
+
+        /// <summary>
+        /// Action to be executed on Transmission status changed.
+        /// </summary>
+        public IOnStatusAction<TransmissionStatus, TransmissionFull>? OnStatusAction { get; }
     }
 }
